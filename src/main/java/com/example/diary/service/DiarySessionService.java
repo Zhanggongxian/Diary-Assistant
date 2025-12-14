@@ -115,6 +115,16 @@ public class DiarySessionService {
         if (currentSession != null && currentSession.isActive()) {
             currentSession.addEntry(content);
             logger.info("记录日记条目：{}", content);
+            
+            // 立即保存会话到文件，防止数据丢失
+            try {
+                diaryRepository.saveSession(currentSession);
+                logger.info("日记会话已立即保存，当前记录数：{}", currentSession.getEntryCount());
+            } catch (Exception e) {
+                logger.error("保存日记会话失败，但继续处理：{}", e.getMessage());
+                // 即使保存失败也继续处理，避免影响用户体验
+            }
+            
             return FIXED_RESPONSE;
         } else {
             // 如果没有活跃会话，直接回复"收到啦"，避免"No command found"错误

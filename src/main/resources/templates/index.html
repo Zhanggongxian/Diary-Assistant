@@ -200,6 +200,8 @@
             overflow-y: auto;
             padding: 20px;
             background: var(--bg-color);
+            display: flex;
+            flex-direction: column;
         }
         .empty-state {
             display: flex;
@@ -234,6 +236,7 @@
             justify-content: center;
             padding: 20px;
             color: var(--text-color);
+            min-height: 100px;
         }
         
         .spinner {
@@ -694,7 +697,7 @@
             
             <!-- 今日记录将在这里动态生成 -->
             
-            <!-- 等待动画 -->
+            <!-- 等待动画（放在聊天容器内部，作为最后一个元素） -->
             <div id="loadingIndicator" class="loading-indicator" style="display: none;">
                 <div class="spinner"></div>
                 <p>正在生成今日总结...</p>
@@ -707,7 +710,7 @@
                 <i class="fas fa-play"></i>
                 <span>开始记录</span>
             </button>
-            <button id="endBtn" class="floating-btn end-btn" onclick="endDiary()" disabled>
+            <button id="endBtn" class="floating-btn end-btn" onclick="confirmEndDiary()" disabled>
                 <i class="fas fa-stop"></i>
                 <span>结束记录</span>
             </button>
@@ -771,6 +774,9 @@
             
             // 绑定主题切换事件
             document.getElementById('themeToggle').addEventListener('click', toggleTheme);
+            
+            // 页面加载时恢复聊天记录
+            restoreChatMessages();
         });
 
         // 检查服务状态
@@ -882,18 +888,24 @@
             });
         }
 
+        // 确认结束日记
+        function confirmEndDiary() {
+            const confirmed = confirm('确定要结束今天的记录吗？\n\n结束后将生成今日总结，并清空当前聊天记录。');
+            if (confirmed) {
+                endDiary();
+            }
+        }
+
         // 结束日记
         async function endDiary() {
-            // 显示等待动画
             const loadingIndicator = document.getElementById('loadingIndicator');
             const chatContainer = document.getElementById('chatContainer');
-            loadingIndicator.style.display = 'flex';
-            // 强制重排以确保动画立即显示
-            loadingIndicator.offsetHeight;
-            chatContainer.scrollTop = chatContainer.scrollHeight;
             
-            // 添加一个短暂的延迟，确保等待动画可见
-            await new Promise(resolve => setTimeout(resolve, 100));
+            // 将等待动画移动到聊天容器的末尾
+            chatContainer.appendChild(loadingIndicator);
+            
+            // 显示等待动画
+            loadingIndicator.style.display = 'flex';
             
             try {
                 const response = await fetch('/end', {
@@ -915,11 +927,16 @@
                     } else {
                         // 直接在聊天记录中显示总结内容，而不是在总结卡片中显示
                         // 使用innerHTML并保留换行符
-                        const formattedMessage = '今日总结：\n\n' + data.message;
+                        const formattedMessage = data.message;
                         addMessage('system', formattedMessage);
                     }
                     
                     updateSessionStatus(data.sessionStatus);
+                    
+                    // 会话结束时清空聊天记录
+                    setTimeout(() => {
+                        clearChatMessages();
+                    }, 2000); // 延迟2秒清空，让用户看到结束消息
                 } else {
                     alert('结束日记失败：' + data.message);
                 }
@@ -942,6 +959,82 @@
             // 暂时留空，因为结束日记时会自动显示总结
         }
 
+        // 保存聊天记录到本地存储
+        function saveChatMessages() {
+            const chatContainer = document.getElementById('chatContainer');
+            const messages = [];
+            
+            // 收集所有消息
+            const messageElements = chatContainer.querySelectorAll('.message-bubble');
+            messageElements.forEach(element => {
+                const type = element.classList.contains('user-message') ? 'user' : 'system';
+                const content = element.querySelector('.message-text').textContent;
+                const time = element.querySelector('.message-time').textContent;
+                
+                messages.push({
+                    type: type,
+                    content: content,
+                    time: time
+                });
+            });
+            
+            // 保存到localStorage
+            localStorage.setItem('diaryChatMessages', JSON.stringify(messages));
+        }
+        
+        // 从本地存储恢复聊天记录
+        function restoreChatMessages() {
+            const savedMessages = localStorage.getItem('diaryChatMessages');
+            if (savedMessages) {
+                const messages = JSON.parse(savedMessages);
+                const chatContainer = document.getElementById('chatContainer');
+                const emptyState = document.getElementById('emptyState');
+                
+                if (emptyState) {
+                    emptyState.remove();
+                }
+                
+                messages.forEach(message => {
+                    const messageDiv = document.createElement('div');
+                    messageDiv.className = `message-bubble ${message.type === 'user' ? 'user-message' : 'system-message'}`;
+                    
+                    // 处理换行符
+                    const formattedContent = message.content.replace(/\n/g, '<br>');
+                    
+                    if (message.type === 'user') {
+                        messageDiv.innerHTML = `
+                            <div class="message-avatar">
+                                <i class="fas fa-user"></i>
+                            </div>
+                            <div class="message-content">
+                                <div class="message-text">${formattedContent}</div>
+                                <div class="message-time">${message.time}</div>
+                            </div>
+                        `;
+                    } else {
+                        messageDiv.innerHTML = `
+                            <div class="message-avatar">
+                                <i class="fas fa-robot"></i>
+                            </div>
+                            <div class="message-content">
+                                <div class="message-text">${formattedContent}</div>
+                                <div class="message-time">${message.time}</div>
+                            </div>
+                        `;
+                    }
+                    
+                    chatContainer.appendChild(messageDiv);
+                });
+                
+                chatContainer.scrollTop = chatContainer.scrollHeight;
+            }
+        }
+        
+        // 清空聊天记录（会话结束时调用）
+        function clearChatMessages() {
+            localStorage.removeItem('diaryChatMessages');
+        }
+        
         // 添加消息到聊天记录
         function addMessage(type, content) {
             const chatContainer = document.getElementById('chatContainer');
@@ -987,6 +1080,9 @@
             
             chatContainer.appendChild(messageDiv);
             chatContainer.scrollTop = chatContainer.scrollHeight;
+            
+            // 保存到本地存储
+            saveChatMessages();
         }
 
         // 处理键盘事件

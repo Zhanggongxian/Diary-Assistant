@@ -1,0 +1,200 @@
+2025-12-14 19:58:31 - INFO  - c.e.diary.DiaryAssistantApplication - Starting DiaryAssistantApplication using Java 17.0.2 with PID 75692 (D:\Desktop\Diary-Assistant\Diary-Assistant\target\classes started by Zhang GX in D:\Desktop\Diary-Assistant\Diary-Assistant)
+2025-12-14 19:58:31 - INFO  - c.e.diary.DiaryAssistantApplication - No active profile set, falling back to 1 default profile: "default"
+2025-12-14 19:58:31 - INFO  - o.a.catalina.core.StandardService - Starting service [Tomcat]
+2025-12-14 19:58:31 - INFO  - o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.16]
+2025-12-14 19:58:32 - INFO  - o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2025-12-14 19:58:32 - WARN  - org.jline - Unable to create a system terminal, creating a dumb terminal (enable debug logging for more information)
+2025-12-14 19:58:32 - WARN  - org.jline - Failed to load history
+java.lang.IllegalArgumentException: Bad history file syntax! The history file `D:\Desktop\Diary-Assistant\Diary-Assistant\diary-assistant.log` may be an older history: please remove it or use a different history file.
+	at org.jline.reader.impl.history.DefaultHistory.addHistoryLine(DefaultHistory.java:178)
+	at org.jline.reader.impl.history.DefaultHistory.addHistoryLine(DefaultHistory.java:163)
+	at org.jline.reader.impl.history.DefaultHistory.lambda$load$0(DefaultHistory.java:84)
+	at java.base/java.util.Iterator.forEachRemaining(Iterator.java:133)
+	at java.base/java.util.Spliterators$IteratorSpliterator.forEachRemaining(Spliterators.java:1845)
+	at java.base/java.util.stream.ReferencePipeline$Head.forEach(ReferencePipeline.java:762)
+	at org.jline.reader.impl.history.DefaultHistory.load(DefaultHistory.java:84)
+	at org.jline.reader.impl.history.DefaultHistory.attach(DefaultHistory.java:68)
+	at org.springframework.shell.boot.LineReaderAutoConfiguration.lineReader(LineReaderAutoConfiguration.java:137)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:568)
+	at org.springframework.beans.factory.support.SimpleInstantiationStrategy.instantiate(SimpleInstantiationStrategy.java:140)
+	at org.springframework.beans.factory.support.ConstructorResolver.instantiate(ConstructorResolver.java:651)
+	at org.springframework.beans.factory.support.ConstructorResolver.instantiateUsingFactoryMethod(ConstructorResolver.java:489)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.instantiateUsingFactoryMethod(AbstractAutowireCapableBeanFactory.java:1336)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBeanInstance(AbstractAutowireCapableBeanFactory.java:1166)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:563)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:523)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:325)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:234)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:323)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:199)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.preInstantiateSingletons(DefaultListableBeanFactory.java:973)
+	at org.springframework.context.support.AbstractApplicationContext.finishBeanFactoryInitialization(AbstractApplicationContext.java:946)
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:616)
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.refresh(ServletWebServerApplicationContext.java:146)
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:753)
+	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:455)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:323)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1342)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1331)
+	at com.example.diary.DiaryAssistantApplication.main(DiaryAssistantApplication.java:45)
+2025-12-14 19:58:32 - INFO  - c.e.diary.DiaryAssistantApplication - Started DiaryAssistantApplication in 1.172 seconds (process running for 1.394)
+2025-12-14 19:58:45 - INFO  - o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2025-12-14 19:59:22 - INFO  - c.e.d.service.DiarySessionService - 开始新的日记会话，日期：2025-12-14
+2025-12-14 19:59:26 - INFO  - c.e.d.service.DiarySessionService - 记录日记条目：案说法
+2025-12-14 19:59:26 - INFO  - c.e.d.p.FileDiaryRepository - 日记会话已保存：diary_2025-12-14.json，包含1条记录
+2025-12-14 19:59:26 - INFO  - c.e.d.service.DiarySessionService - 日记会话已立即保存，当前记录数：1
+2025-12-14 19:59:29 - INFO  - c.e.d.service.DiarySessionService - 记录日记条目：uil；iu头疼眼睛疼
+2025-12-14 19:59:29 - INFO  - c.e.d.p.FileDiaryRepository - 日记会话已保存：diary_2025-12-14.json，包含2条记录
+2025-12-14 19:59:29 - INFO  - c.e.d.service.DiarySessionService - 日记会话已立即保存，当前记录数：2
+2025-12-14 19:59:31 - INFO  - c.e.d.service.DiarySessionService - 记录日记条目：如图如图urt
+2025-12-14 19:59:31 - INFO  - c.e.d.p.FileDiaryRepository - 日记会话已保存：diary_2025-12-14.json，包含3条记录
+2025-12-14 19:59:31 - INFO  - c.e.d.service.DiarySessionService - 日记会话已立即保存，当前记录数：3
+2025-12-14 19:59:50 - INFO  - c.e.d.service.DiarySessionService - 记录日记条目：有人替你绘图入门try
+2025-12-14 19:59:50 - INFO  - c.e.d.p.FileDiaryRepository - 日记会话已保存：diary_2025-12-14.json，包含4条记录
+2025-12-14 19:59:50 - INFO  - c.e.d.service.DiarySessionService - 日记会话已立即保存，当前记录数：4
+2025-12-14 20:00:59 - INFO  - c.e.d.service.DiarySessionService - 记录日记条目：应如何护理
+2025-12-14 20:00:59 - INFO  - c.e.d.p.FileDiaryRepository - 日记会话已保存：diary_2025-12-14.json，包含5条记录
+2025-12-14 20:00:59 - INFO  - c.e.d.service.DiarySessionService - 日记会话已立即保存，当前记录数：5
+2025-12-14 20:01:11 - INFO  - c.e.d.service.DiarySessionService - 结束日记会话，开始调用大模型生成总结，记录数量：5
+2025-12-14 20:01:11 - INFO  - c.e.diary.service.OllamaService - 调用Ollama API，模型：qwen2.5:7b，提示词长度：719
+2025-12-14 20:01:27 - INFO  - c.e.diary.service.OllamaService - Ollama API调用成功，响应长度：506
+2025-12-14 20:01:27 - INFO  - c.e.d.p.FileDiaryRepository - 日记会话已保存：diary_2025-12-14.json，包含5条记录
+2025-12-14 20:01:27 - INFO  - c.e.d.service.DiarySessionService - 日记会话结束并保存成功
+2025-12-14 20:02:30 - INFO  - c.e.d.service.DiarySessionService - 开始新的日记会话，日期：2025-12-14
+2025-12-14 20:02:33 - INFO  - c.e.d.service.DiarySessionService - 记录日记条目：二维图
+2025-12-14 20:02:33 - INFO  - c.e.d.p.FileDiaryRepository - 日记会话已保存：diary_2025-12-14.json，包含1条记录
+2025-12-14 20:02:33 - INFO  - c.e.d.service.DiarySessionService - 日记会话已立即保存，当前记录数：1
+2025-12-14 20:02:34 - INFO  - c.e.d.service.DiarySessionService - 结束日记会话，开始调用大模型生成总结，记录数量：1
+2025-12-14 20:02:34 - INFO  - c.e.diary.service.OllamaService - 调用Ollama API，模型：qwen2.5:7b，提示词长度：665
+2025-12-14 20:02:44 - INFO  - c.e.diary.service.OllamaService - Ollama API调用成功，响应长度：819
+2025-12-14 20:02:44 - INFO  - c.e.d.p.FileDiaryRepository - 日记会话已保存：diary_2025-12-14.json，包含1条记录
+2025-12-14 20:02:44 - INFO  - c.e.d.service.DiarySessionService - 日记会话结束并保存成功
+2025-12-14 20:03:36 - INFO  - c.e.d.service.DiarySessionService - 开始新的日记会话，日期：2025-12-14
+2025-12-14 20:03:38 - INFO  - c.e.d.service.DiarySessionService - 开始新的日记会话，日期：2025-12-14
+2025-12-14 20:03:40 - INFO  - c.e.d.service.DiarySessionService - 记录日记条目：太丢
+2025-12-14 20:03:40 - INFO  - c.e.d.p.FileDiaryRepository - 日记会话已保存：diary_2025-12-14.json，包含1条记录
+2025-12-14 20:03:40 - INFO  - c.e.d.service.DiarySessionService - 日记会话已立即保存，当前记录数：1
+2025-12-14 20:03:41 - INFO  - c.e.d.service.DiarySessionService - 结束日记会话，开始调用大模型生成总结，记录数量：1
+2025-12-14 20:03:41 - INFO  - c.e.diary.service.OllamaService - 调用Ollama API，模型：qwen2.5:7b，提示词长度：664
+2025-12-14 20:03:47 - INFO  - c.e.diary.service.OllamaService - Ollama API调用成功，响应长度：488
+2025-12-14 20:03:47 - INFO  - c.e.d.p.FileDiaryRepository - 日记会话已保存：diary_2025-12-14.json，包含1条记录
+2025-12-14 20:03:47 - INFO  - c.e.d.service.DiarySessionService - 日记会话结束并保存成功
+2025-12-14 20:08:30 - INFO  - c.e.d.service.DiarySessionService - 开始新的日记会话，日期：2025-12-14
+2025-12-14 20:08:33 - INFO  - c.e.d.service.DiarySessionService - 记录日记条目：婴儿肌
+2025-12-14 20:08:33 - INFO  - c.e.d.p.FileDiaryRepository - 日记会话已保存：diary_2025-12-14.json，包含1条记录
+2025-12-14 20:08:33 - INFO  - c.e.d.service.DiarySessionService - 日记会话已立即保存，当前记录数：1
+2025-12-14 20:08:34 - INFO  - c.e.d.service.DiarySessionService - 结束日记会话，开始调用大模型生成总结，记录数量：1
+2025-12-14 20:08:34 - INFO  - c.e.diary.service.OllamaService - 调用Ollama API，模型：qwen2.5:7b，提示词长度：665
+2025-12-14 20:08:43 - INFO  - c.e.diary.service.OllamaService - Ollama API调用成功，响应长度：705
+2025-12-14 20:08:43 - INFO  - c.e.d.p.FileDiaryRepository - 日记会话已保存：diary_2025-12-14.json，包含1条记录
+2025-12-14 20:08:43 - INFO  - c.e.d.service.DiarySessionService - 日记会话结束并保存成功
+2025-12-14 20:08:50 - INFO  - c.e.d.service.DiarySessionService - 开始新的日记会话，日期：2025-12-14
+2025-12-14 20:08:53 - INFO  - c.e.d.service.DiarySessionService - 记录日记条目：QWFQ我
+2025-12-14 20:08:53 - INFO  - c.e.d.p.FileDiaryRepository - 日记会话已保存：diary_2025-12-14.json，包含1条记录
+2025-12-14 20:08:53 - INFO  - c.e.d.service.DiarySessionService - 日记会话已立即保存，当前记录数：1
+2025-12-14 20:08:56 - INFO  - c.e.d.service.DiarySessionService - 记录日记条目：我如果湖人哇哈
+2025-12-14 20:08:56 - INFO  - c.e.d.p.FileDiaryRepository - 日记会话已保存：diary_2025-12-14.json，包含2条记录
+2025-12-14 20:08:56 - INFO  - c.e.d.service.DiarySessionService - 日记会话已立即保存，当前记录数：2
+2025-12-14 20:08:58 - INFO  - c.e.d.service.DiarySessionService - 结束日记会话，开始调用大模型生成总结，记录数量：2
+2025-12-14 20:08:58 - INFO  - c.e.diary.service.OllamaService - 调用Ollama API，模型：qwen2.5:7b，提示词长度：679
+2025-12-14 20:09:04 - INFO  - c.e.diary.service.OllamaService - Ollama API调用成功，响应长度：435
+2025-12-14 20:09:04 - INFO  - c.e.d.p.FileDiaryRepository - 日记会话已保存：diary_2025-12-14.json，包含2条记录
+2025-12-14 20:09:04 - INFO  - c.e.d.service.DiarySessionService - 日记会话结束并保存成功
+2025-12-14 20:12:25 - INFO  - c.e.d.service.DiarySessionService - 开始新的日记会话，日期：2025-12-14
+2025-12-14 20:12:28 - INFO  - c.e.d.service.DiarySessionService - 记录日记条目：天梭和
+2025-12-14 20:12:28 - INFO  - c.e.d.p.FileDiaryRepository - 日记会话已保存：diary_2025-12-14.json，包含1条记录
+2025-12-14 20:12:28 - INFO  - c.e.d.service.DiarySessionService - 日记会话已立即保存，当前记录数：1
+2025-12-14 20:12:29 - INFO  - c.e.d.service.DiarySessionService - 结束日记会话，开始调用大模型生成总结，记录数量：1
+2025-12-14 20:12:29 - INFO  - c.e.diary.service.OllamaService - 调用Ollama API，模型：qwen2.5:7b，提示词长度：665
+2025-12-14 20:12:36 - INFO  - c.e.diary.service.OllamaService - Ollama API调用成功，响应长度：531
+2025-12-14 20:12:36 - INFO  - c.e.d.p.FileDiaryRepository - 日记会话已保存：diary_2025-12-14.json，包含1条记录
+2025-12-14 20:12:36 - INFO  - c.e.d.service.DiarySessionService - 日记会话结束并保存成功
+2025-12-14 20:12:40 - INFO  - c.e.d.service.DiarySessionService - 直接输入内容：请二位烫个头
+2025-12-14 20:12:45 - INFO  - c.e.d.service.DiarySessionService - 开始新的日记会话，日期：2025-12-14
+2025-12-14 20:12:49 - INFO  - c.e.d.service.DiarySessionService - 记录日记条目：WETEW
+2025-12-14 20:12:49 - INFO  - c.e.d.p.FileDiaryRepository - 日记会话已保存：diary_2025-12-14.json，包含1条记录
+2025-12-14 20:12:49 - INFO  - c.e.d.service.DiarySessionService - 日记会话已立即保存，当前记录数：1
+2025-12-14 20:12:51 - INFO  - c.e.d.service.DiarySessionService - 记录日记条目：是德国S
+2025-12-14 20:12:51 - INFO  - c.e.d.p.FileDiaryRepository - 日记会话已保存：diary_2025-12-14.json，包含2条记录
+2025-12-14 20:12:51 - INFO  - c.e.d.service.DiarySessionService - 日记会话已立即保存，当前记录数：2
+2025-12-14 20:12:52 - INFO  - c.e.d.service.DiarySessionService - 结束日记会话，开始调用大模型生成总结，记录数量：2
+2025-12-14 20:12:52 - INFO  - c.e.diary.service.OllamaService - 调用Ollama API，模型：qwen2.5:7b，提示词长度：676
+2025-12-14 20:12:58 - INFO  - c.e.diary.service.OllamaService - Ollama API调用成功，响应长度：468
+2025-12-14 20:12:58 - INFO  - c.e.d.p.FileDiaryRepository - 日记会话已保存：diary_2025-12-14.json，包含2条记录
+2025-12-14 20:12:58 - INFO  - c.e.d.service.DiarySessionService - 日记会话结束并保存成功
+2025-12-14 20:14:57 - INFO  - c.e.d.service.DiarySessionService - 开始新的日记会话，日期：2025-12-14
+2025-12-14 20:14:59 - INFO  - c.e.d.service.DiarySessionService - 记录日记条目：牛骨粉
+2025-12-14 20:14:59 - INFO  - c.e.d.p.FileDiaryRepository - 日记会话已保存：diary_2025-12-14.json，包含1条记录
+2025-12-14 20:14:59 - INFO  - c.e.d.service.DiarySessionService - 日记会话已立即保存，当前记录数：1
+2025-12-14 20:15:03 - INFO  - c.e.d.service.DiarySessionService - 结束日记会话，开始调用大模型生成总结，记录数量：1
+2025-12-14 20:15:03 - INFO  - c.e.diary.service.OllamaService - 调用Ollama API，模型：qwen2.5:7b，提示词长度：665
+2025-12-14 20:15:11 - INFO  - c.e.diary.service.OllamaService - Ollama API调用成功，响应长度：646
+2025-12-14 20:15:11 - INFO  - c.e.d.p.FileDiaryRepository - 日记会话已保存：diary_2025-12-14.json，包含1条记录
+2025-12-14 20:15:11 - INFO  - c.e.d.service.DiarySessionService - 日记会话结束并保存成功
+2025-12-14 20:17:33 - INFO  - c.e.d.service.DiarySessionService - 开始新的日记会话，日期：2025-12-14
+2025-12-14 20:17:36 - INFO  - c.e.d.service.DiarySessionService - 记录日记条目：颜色如何
+2025-12-14 20:17:36 - INFO  - c.e.d.p.FileDiaryRepository - 日记会话已保存：diary_2025-12-14.json，包含1条记录
+2025-12-14 20:17:36 - INFO  - c.e.d.service.DiarySessionService - 日记会话已立即保存，当前记录数：1
+2025-12-14 20:17:36 - INFO  - c.e.d.service.DiarySessionService - 结束日记会话，开始调用大模型生成总结，记录数量：1
+2025-12-14 20:17:36 - INFO  - c.e.diary.service.OllamaService - 调用Ollama API，模型：qwen2.5:7b，提示词长度：666
+2025-12-14 20:17:43 - INFO  - c.e.diary.service.OllamaService - Ollama API调用成功，响应长度：501
+2025-12-14 20:17:43 - INFO  - c.e.d.p.FileDiaryRepository - 日记会话已保存：diary_2025-12-14.json，包含1条记录
+2025-12-14 20:17:43 - INFO  - c.e.d.service.DiarySessionService - 日记会话结束并保存成功
+2025-12-14 20:17:53 - INFO  - c.e.d.service.DiarySessionService - 开始新的日记会话，日期：2025-12-14
+2025-12-14 20:17:56 - INFO  - c.e.d.service.DiarySessionService - 记录日记条目：企鹅娃娃沟通
+2025-12-14 20:17:56 - INFO  - c.e.d.p.FileDiaryRepository - 日记会话已保存：diary_2025-12-14.json，包含1条记录
+2025-12-14 20:17:56 - INFO  - c.e.d.service.DiarySessionService - 日记会话已立即保存，当前记录数：1
+2025-12-14 20:17:58 - INFO  - c.e.d.service.DiarySessionService - 记录日记条目：违规为
+2025-12-14 20:17:58 - INFO  - c.e.d.p.FileDiaryRepository - 日记会话已保存：diary_2025-12-14.json，包含2条记录
+2025-12-14 20:17:58 - INFO  - c.e.d.service.DiarySessionService - 日记会话已立即保存，当前记录数：2
+2025-12-14 20:17:59 - INFO  - c.e.d.service.DiarySessionService - 结束日记会话，开始调用大模型生成总结，记录数量：2
+2025-12-14 20:17:59 - INFO  - c.e.diary.service.OllamaService - 调用Ollama API，模型：qwen2.5:7b，提示词长度：676
+2025-12-14 20:18:06 - INFO  - c.e.diary.service.OllamaService - Ollama API调用成功，响应长度：513
+2025-12-14 20:18:06 - INFO  - c.e.d.p.FileDiaryRepository - 日记会话已保存：diary_2025-12-14.json，包含2条记录
+2025-12-14 20:18:06 - INFO  - c.e.d.service.DiarySessionService - 日记会话结束并保存成功
+2025-12-14 20:20:54 - INFO  - c.e.d.service.DiarySessionService - 开始新的日记会话，日期：2025-12-14
+2025-12-14 20:20:56 - INFO  - c.e.d.service.DiarySessionService - 记录日记条目：啥都不会噶双方的
+2025-12-14 20:20:56 - INFO  - c.e.d.p.FileDiaryRepository - 日记会话已保存：diary_2025-12-14.json，包含1条记录
+2025-12-14 20:20:56 - INFO  - c.e.d.service.DiarySessionService - 日记会话已立即保存，当前记录数：1
+2025-12-14 20:20:58 - INFO  - c.e.d.service.DiarySessionService - 记录日记条目：傻大个撒旦给
+2025-12-14 20:20:58 - INFO  - c.e.d.p.FileDiaryRepository - 日记会话已保存：diary_2025-12-14.json，包含2条记录
+2025-12-14 20:20:58 - INFO  - c.e.d.service.DiarySessionService - 日记会话已立即保存，当前记录数：2
+2025-12-14 20:20:59 - INFO  - c.e.d.service.DiarySessionService - 结束日记会话，开始调用大模型生成总结，记录数量：2
+2025-12-14 20:20:59 - INFO  - c.e.diary.service.OllamaService - 调用Ollama API，模型：qwen2.5:7b，提示词长度：681
+2025-12-14 20:21:07 - INFO  - c.e.diary.service.OllamaService - Ollama API调用成功，响应长度：642
+2025-12-14 20:21:07 - INFO  - c.e.d.p.FileDiaryRepository - 日记会话已保存：diary_2025-12-14.json，包含2条记录
+2025-12-14 20:21:07 - INFO  - c.e.d.service.DiarySessionService - 日记会话结束并保存成功
+2025-12-14 20:21:11 - INFO  - c.e.d.service.DiarySessionService - 开始新的日记会话，日期：2025-12-14
+2025-12-14 20:21:13 - INFO  - c.e.d.service.DiarySessionService - 记录日记条目：新区和你
+2025-12-14 20:21:13 - INFO  - c.e.d.p.FileDiaryRepository - 日记会话已保存：diary_2025-12-14.json，包含1条记录
+2025-12-14 20:21:13 - INFO  - c.e.d.service.DiarySessionService - 日记会话已立即保存，当前记录数：1
+2025-12-14 20:21:16 - INFO  - c.e.d.service.DiarySessionService - 记录日记条目：一内裤你们
+2025-12-14 20:21:16 - INFO  - c.e.d.p.FileDiaryRepository - 日记会话已保存：diary_2025-12-14.json，包含2条记录
+2025-12-14 20:21:16 - INFO  - c.e.d.service.DiarySessionService - 日记会话已立即保存，当前记录数：2
+2025-12-14 20:21:17 - INFO  - c.e.d.service.DiarySessionService - 结束日记会话，开始调用大模型生成总结，记录数量：2
+2025-12-14 20:21:17 - INFO  - c.e.diary.service.OllamaService - 调用Ollama API，模型：qwen2.5:7b，提示词长度：676
+2025-12-14 20:21:24 - INFO  - c.e.diary.service.OllamaService - Ollama API调用成功，响应长度：562
+2025-12-14 20:21:24 - INFO  - c.e.d.p.FileDiaryRepository - 日记会话已保存：diary_2025-12-14.json，包含2条记录
+2025-12-14 20:21:24 - INFO  - c.e.d.service.DiarySessionService - 日记会话结束并保存成功
+2025-12-14 20:24:41 - INFO  - c.e.d.service.DiarySessionService - 开始新的日记会话，日期：2025-12-14
+2025-12-14 20:24:48 - INFO  - c.e.d.service.DiarySessionService - 开始新的日记会话，日期：2025-12-14
+2025-12-14 20:24:50 - INFO  - c.e.d.service.DiarySessionService - 记录日记条目：西二路过后
+2025-12-14 20:24:50 - INFO  - c.e.d.p.FileDiaryRepository - 日记会话已保存：diary_2025-12-14.json，包含1条记录
+2025-12-14 20:24:50 - INFO  - c.e.d.service.DiarySessionService - 日记会话已立即保存，当前记录数：1
+2025-12-14 20:24:52 - INFO  - c.e.d.service.DiarySessionService - 结束日记会话，开始调用大模型生成总结，记录数量：1
+2025-12-14 20:24:52 - INFO  - c.e.diary.service.OllamaService - 调用Ollama API，模型：qwen2.5:7b，提示词长度：667
+2025-12-14 20:24:59 - INFO  - c.e.diary.service.OllamaService - Ollama API调用成功，响应长度：520
+2025-12-14 20:24:59 - INFO  - c.e.d.p.FileDiaryRepository - 日记会话已保存：diary_2025-12-14.json，包含1条记录
+2025-12-14 20:24:59 - INFO  - c.e.d.service.DiarySessionService - 日记会话结束并保存成功
+2025-12-14 20:25:04 - INFO  - c.e.d.service.DiarySessionService - 开始新的日记会话，日期：2025-12-14
+2025-12-14 20:25:07 - INFO  - c.e.d.service.DiarySessionService - 记录日记条目：这盎司
+2025-12-14 20:25:07 - INFO  - c.e.d.p.FileDiaryRepository - 日记会话已保存：diary_2025-12-14.json，包含1条记录
+2025-12-14 20:25:07 - INFO  - c.e.d.service.DiarySessionService - 日记会话已立即保存，当前记录数：1
+2025-12-14 20:25:13 - INFO  - c.e.d.service.DiarySessionService - 结束日记会话，开始调用大模型生成总结，记录数量：1
+2025-12-14 20:25:13 - INFO  - c.e.diary.service.OllamaService - 调用Ollama API，模型：qwen2.5:7b，提示词长度：665
+2025-12-14 20:25:20 - INFO  - c.e.diary.service.OllamaService - Ollama API调用成功，响应长度：562
+2025-12-14 20:25:20 - INFO  - c.e.d.p.FileDiaryRepository - 日记会话已保存：diary_2025-12-14.json，包含1条记录
+2025-12-14 20:25:20 - INFO  - c.e.d.service.DiarySessionService - 日记会话结束并保存成功
