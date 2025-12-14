@@ -1,0 +1,596 @@
+<!DOCTYPE html>
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>日记日历 - 日记助手</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #667eea;
+            --secondary-color: #764ba2;
+            --bg-color: #ffffff;
+            --text-color: #333333;
+            --card-bg: #f8f9fa;
+            --border-color: #dee2e6;
+            --success-color: #d4edda;
+            --success-border: #c3e6cb;
+            --selected-color: #007bff;
+            --selected-border: #0056b3;
+        }
+        
+        .dark-mode {
+            --primary-color: #8b5cf6;
+            --secondary-color: #a78bfa;
+            --bg-color: #1a1a1a;
+            --text-color: #e0e0e0;
+            --card-bg: #2d2d2d;
+            --border-color: #404040;
+            --success-color: #1a472a;
+            --success-border: #2e7d32;
+            --selected-color: #1976d2;
+            --selected-border: #1565c0;
+        }
+        
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            transition: all 0.3s ease;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        .calendar-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 15px;
+        }
+        
+        @media (max-width: 768px) {
+            .calendar-container {
+                padding: 10px;
+            }
+        }
+        
+        .theme-toggle {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1000;
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            transition: all 0.3s ease;
+        }
+        
+        .theme-toggle:hover {
+            transform: scale(1.1);
+        }
+        
+        .calendar-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding: 15px;
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+            color: white;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+        
+        @media (max-width: 768px) {
+            .calendar-header {
+                flex-direction: column;
+                gap: 15px;
+                text-align: center;
+                padding: 20px 15px;
+            }
+            
+            .calendar-header h2 {
+                font-size: 1.5rem;
+                margin-bottom: 0;
+            }
+        }
+        
+        .calendar-nav {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+        
+        @media (max-width: 480px) {
+            .calendar-nav {
+                flex-direction: column;
+                gap: 10px;
+            }
+            
+            .calendar-nav h4 {
+                font-size: 1.2rem;
+            }
+        }
+        
+        .calendar-grid {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 3px;
+            margin-bottom: 30px;
+        }
+        
+        @media (max-width: 768px) {
+            .calendar-grid {
+                gap: 2px;
+            }
+        }
+        
+        .calendar-day-header {
+            text-align: center;
+            padding: 12px 5px;
+            background-color: var(--card-bg);
+            font-weight: bold;
+            border-radius: 8px;
+            font-size: 0.9rem;
+        }
+        
+        @media (max-width: 480px) {
+            .calendar-day-header {
+                padding: 8px 3px;
+                font-size: 0.8rem;
+            }
+        }
+        
+        .calendar-day {
+            aspect-ratio: 1;
+            min-height: 60px;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 5px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            background-color: var(--bg-color);
+        }
+        
+        @media (max-width: 480px) {
+            .calendar-day {
+                min-height: 45px;
+                padding: 3px;
+            }
+        }
+        
+        .calendar-day:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
+        
+        .calendar-day:active {
+            transform: scale(0.95);
+        }
+        
+        .calendar-day.empty {
+            background-color: var(--card-bg);
+            cursor: default;
+        }
+        
+        .calendar-day.empty:hover {
+            transform: none;
+            box-shadow: none;
+        }
+        
+        .calendar-day.has-diary {
+            background-color: var(--success-color);
+            border-color: var(--success-border);
+        }
+        
+        .calendar-day.selected {
+            background-color: var(--selected-color);
+            color: white;
+            border-color: var(--selected-border);
+        }
+        
+        .calendar-day-number {
+            font-size: 0.9rem;
+            font-weight: bold;
+            text-align: center;
+        }
+        
+        @media (max-width: 480px) {
+            .calendar-day-number {
+                font-size: 0.8rem;
+            }
+        }
+        
+        .calendar-day-indicator {
+            font-size: 0.7rem;
+            text-align: center;
+            opacity: 0.8;
+        }
+        
+        .diary-content {
+            background-color: var(--card-bg);
+            border-radius: 15px;
+            padding: 20px;
+            min-height: 300px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+        
+        @media (max-width: 768px) {
+            .diary-content {
+                padding: 15px;
+                border-radius: 12px;
+            }
+        }
+        
+        .diary-entry {
+            background-color: var(--bg-color);
+            border-left: 4px solid var(--primary-color);
+            padding: 12px 15px;
+            margin-bottom: 10px;
+            border-radius: 0 8px 8px 0;
+            transition: all 0.3s ease;
+        }
+        
+        .diary-entry:hover {
+            transform: translateX(5px);
+        }
+        
+        .diary-summary {
+            background-color: var(--bg-color);
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 15px;
+            border: 1px solid var(--border-color);
+        }
+        
+        .no-diary {
+            text-align: center;
+            color: var(--text-color);
+            padding: 40px;
+            opacity: 0.7;
+        }
+        
+        .back-button {
+            margin-bottom: 20px;
+        }
+        
+        .back-button .btn {
+            border-radius: 25px;
+            padding: 8px 20px;
+            font-weight: 600;
+        }
+        
+        /* 触摸优化 */
+        @media (hover: none) and (pointer: coarse) {
+            .calendar-day:hover {
+                transform: none;
+                box-shadow: none;
+            }
+            
+            .calendar-day:active {
+                transform: scale(0.95);
+                box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+            }
+            
+            .diary-entry:hover {
+                transform: none;
+            }
+            
+            .diary-entry:active {
+                transform: translateX(5px);
+            }
+        }
+        
+        /* 滚动条优化 */
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+        
+        ::-webkit-scrollbar-track {
+            background: var(--card-bg);
+        }
+        
+        ::-webkit-scrollbar-thumb {
+            background: var(--primary-color);
+            border-radius: 3px;
+        }
+        
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--secondary-color);
+        }
+    </style>
+</head>
+<body>
+    <!-- 夜间模式切换按钮 -->
+    <button class="theme-toggle" id="themeToggle" title="切换夜间模式">
+        <i class="fas fa-moon" id="themeIcon"></i>
+    </button>
+    
+    <div class="container-fluid calendar-container">
+        <!-- 返回按钮 -->
+        <div class="back-button">
+            <a href="/" class="btn btn-outline-primary">
+                <i class="fas fa-arrow-left"></i> 返回日记助手
+            </a>
+        </div>
+        
+        <!-- 日历头部 -->
+        <div class="calendar-header">
+            <h2><i class="fas fa-calendar-alt"></i> 日记日历</h2>
+            <div class="calendar-nav">
+                <button class="btn btn-light" onclick="changeMonth(-1)">
+                    <i class="fas fa-chevron-left"></i> 上月
+                </button>
+                <h4 id="current-month" class="mb-0">2025年12月</h4>
+                <button class="btn btn-light" onclick="changeMonth(1)">
+                    下月 <i class="fas fa-chevron-right"></i>
+                </button>
+            </div>
+        </div>
+        
+        <!-- 日历网格 -->
+        <div class="calendar-grid" id="calendar-grid">
+            <!-- 星期头部 -->
+            <div class="calendar-day-header">日</div>
+            <div class="calendar-day-header">一</div>
+            <div class="calendar-day-header">二</div>
+            <div class="calendar-day-header">三</div>
+            <div class="calendar-day-header">四</div>
+            <div class="calendar-day-header">五</div>
+            <div class="calendar-day-header">六</div>
+            
+            <!-- 日历日期将通过JavaScript动态生成 -->
+        </div>
+        
+        <!-- 日记内容区域 -->
+        <div class="diary-content" id="diary-content">
+            <div class="no-diary">
+                <i class="fas fa-calendar-day fa-3x mb-3"></i>
+                <h4>选择日期查看日记</h4>
+                <p>点击日历中有日记的日期（绿色标记）来查看当天的日记内容</p>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        let currentDate = new Date();
+        let diaryDates = [];
+        let selectedDate = null;
+        let isDarkMode = false;
+
+        // 初始化主题
+        function initTheme() {
+            // 检查本地存储中的主题设置
+            const savedTheme = localStorage.getItem('diaryCalendarTheme');
+            isDarkMode = savedTheme === 'dark';
+            
+            // 应用主题
+            applyTheme();
+            
+            // 设置主题切换按钮事件
+            document.getElementById('themeToggle').addEventListener('click', toggleTheme);
+        }
+
+        // 切换主题
+        function toggleTheme() {
+            isDarkMode = !isDarkMode;
+            applyTheme();
+            
+            // 保存到本地存储
+            localStorage.setItem('diaryCalendarTheme', isDarkMode ? 'dark' : 'light');
+        }
+
+        // 应用主题
+        function applyTheme() {
+            const body = document.body;
+            const themeIcon = document.getElementById('themeIcon');
+            
+            if (isDarkMode) {
+                body.classList.add('dark-mode');
+                themeIcon.className = 'fas fa-sun';
+                document.getElementById('themeToggle').title = '切换日间模式';
+            } else {
+                body.classList.remove('dark-mode');
+                themeIcon.className = 'fas fa-moon';
+                document.getElementById('themeToggle').title = '切换夜间模式';
+            }
+        }
+
+        // 初始化日历
+        async function initCalendar() {
+            initTheme();
+            await loadDiaryDates();
+            renderCalendar(currentDate.getFullYear(), currentDate.getMonth());
+        }
+
+        // 加载有日记的日期列表
+        async function loadDiaryDates() {
+            try {
+                const response = await fetch('/api/calendar/dates');
+                diaryDates = await response.json();
+            } catch (error) {
+                console.error('加载日记日期失败:', error);
+            }
+        }
+
+        // 渲染日历
+        function renderCalendar(year, month) {
+            const calendarGrid = document.getElementById('calendar-grid');
+            
+            // 清空除星期头外的所有日期
+            while (calendarGrid.children.length > 7) {
+                calendarGrid.removeChild(calendarGrid.lastChild);
+            }
+            
+            // 更新月份显示
+            document.getElementById('current-month').textContent = 
+                `${year}年${month + 1}月`;
+            
+            // 获取当月第一天和最后一天
+            const firstDay = new Date(year, month, 1);
+            const lastDay = new Date(year, month + 1, 0);
+            
+            // 计算第一天是星期几（0=星期日，6=星期六）
+            const firstDayOfWeek = firstDay.getDay();
+            
+            // 添加空白单元格
+            for (let i = 0; i < firstDayOfWeek; i++) {
+                const emptyDay = document.createElement('div');
+                emptyDay.className = 'calendar-day empty';
+                calendarGrid.appendChild(emptyDay);
+            }
+            
+            // 添加日期单元格
+            for (let day = 1; day <= lastDay.getDate(); day++) {
+                const dateStr = `${year}-${String(month + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
+                const hasDiary = diaryDates.includes(dateStr);
+                
+                const dayElement = document.createElement('div');
+                dayElement.className = `calendar-day ${hasDiary ? 'has-diary' : ''}`;
+                dayElement.innerHTML = `
+                    <div class="calendar-day-number">${day}</div>
+                    ${hasDiary ? '<div class="calendar-day-indicator"><i class="fas fa-book"></i></div>' : ''}
+                `;
+                
+                dayElement.onclick = () => selectDate(dateStr, dayElement);
+                calendarGrid.appendChild(dayElement);
+            }
+        }
+
+        // 选择日期
+        async function selectDate(dateStr, element) {
+            // 移除之前选中的样式
+            document.querySelectorAll('.calendar-day.selected').forEach(el => {
+                el.classList.remove('selected');
+            });
+            
+            // 添加选中样式
+            element.classList.add('selected');
+            selectedDate = dateStr;
+            
+            // 加载日记内容
+            await loadDiaryContent(dateStr);
+        }
+
+        // 加载日记内容
+        async function loadDiaryContent(dateStr) {
+            const diaryContent = document.getElementById('diary-content');
+            
+            try {
+                const response = await fetch(`/api/calendar/diary/${dateStr}`);
+                const data = await response.json();
+                
+                if (data.selectedDiary) {
+                    const diary = data.selectedDiary;
+                    diaryContent.innerHTML = `
+                        <h4><i class="fas fa-calendar-day"></i> ${dateStr} 的日记</h4>
+                        <p class="text-muted">
+                            <i class="fas fa-clock"></i> 记录时间: ${diary.startTime} - ${diary.endTime}
+                            <span class="ms-3"><i class="fas fa-list"></i> 条目数: ${diary.entryCount}</span>
+                        </p>
+                        
+                        <h5><i class="fas fa-pencil-alt"></i> 日记条目</h5>
+                        <div id="diary-entries">
+                            ${diary.entries ? diary.entries.map(entry => `
+                                <div class="diary-entry">
+                                    <small class="text-muted">${entry.timestamp}</small>
+                                    <div>${entry.content}</div>
+                                </div>
+                            `).join('') : '<p>暂无日记条目</p>'}
+                        </div>
+                        
+                        ${diary.generatedDiary ? `
+                        <div class="diary-summary">
+                            <h5><i class="fas fa-book"></i> 完整版日记</h5>
+                            <p>${diary.generatedDiary}</p>
+                        </div>
+                        ` : ''}
+                        
+                        <div class="diary-summary">
+                            <h5><i class="fas fa-star"></i> 日记总结</h5>
+                            <p>${diary.summary || '暂无总结'}</p>
+                        </div>
+                        
+                        ${diary.insights ? `
+                        <div class="diary-summary">
+                            <h5><i class="fas fa-lightbulb"></i> 洞察分析</h5>
+                            <p>${diary.insights}</p>
+                        </div>
+                        ` : ''}
+                    `;
+                } else {
+                    diaryContent.innerHTML = `
+                        <div class="no-diary">
+                            <i class="fas fa-calendar-times fa-3x mb-3"></i>
+                            <h4>${dateStr} 没有日记记录</h4>
+                            <p>这一天还没有记录任何日记内容</p>
+                        </div>
+                    `;
+                }
+            } catch (error) {
+                console.error('加载日记内容失败:', error);
+                diaryContent.innerHTML = `
+                    <div class="no-diary">
+                        <i class="fas fa-exclamation-triangle fa-3x mb-3"></i>
+                        <h4>加载日记失败</h4>
+                        <p>无法加载 ${dateStr} 的日记内容</p>
+                    </div>
+                `;
+            }
+        }
+
+        // 切换月份
+        function changeMonth(delta) {
+            currentDate.setMonth(currentDate.getMonth() + delta);
+            renderCalendar(currentDate.getFullYear(), currentDate.getMonth());
+        }
+
+        // 触摸滑动支持
+        function initTouchSupport() {
+            const calendarGrid = document.getElementById('calendar-grid');
+            let startX = 0;
+            let endX = 0;
+            
+            calendarGrid.addEventListener('touchstart', (e) => {
+                startX = e.touches[0].clientX;
+            });
+            
+            calendarGrid.addEventListener('touchend', (e) => {
+                endX = e.changedTouches[0].clientX;
+                handleSwipe();
+            });
+            
+            function handleSwipe() {
+                const swipeDistance = endX - startX;
+                const minSwipeDistance = 50; // 最小滑动距离
+                
+                if (Math.abs(swipeDistance) > minSwipeDistance) {
+                    if (swipeDistance > 0) {
+                        // 向右滑动，切换到上个月
+                        changeMonth(-1);
+                    } else {
+                        // 向左滑动，切换到下个月
+                        changeMonth(1);
+                    }
+                }
+            }
+        }
+
+        // 页面加载完成后初始化日历和触摸支持
+        document.addEventListener('DOMContentLoaded', () => {
+            initCalendar();
+            initTouchSupport();
+        });
+    </script>
+</body>
+</html>

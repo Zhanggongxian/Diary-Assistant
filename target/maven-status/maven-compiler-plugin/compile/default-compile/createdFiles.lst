@@ -1,0 +1,14 @@
+com\example\diary\model\OllamaRequest.class
+com\example\diary\controller\CalendarController.class
+com\example\diary\model\DiaryEntry.class
+com\example\diary\model\DiarySession.class
+com\example\diary\model\OllamaResponse.class
+com\example\diary\controller\DiaryController.class
+com\example\diary\service\CalendarService.class
+com\example\diary\controller\WebDiaryController.class
+com\example\diary\model\CalendarResponse.class
+com\example\diary\DiaryAssistantApplication.class
+com\example\diary\service\PromptBuilder.class
+com\example\diary\persistence\FileDiaryRepository.class
+com\example\diary\service\DiarySessionService.class
+com\example\diary\service\OllamaService.class
