@@ -1,0 +1,45 @@
+# 日记助手应用配置
+spring:
+  application:
+    name: diary-assistant
+  
+  # Web配置
+  web:
+    resources:
+      static-locations: classpath:/static/,classpath:/templates/
+  
+  # Thymeleaf模板配置
+  thymeleaf:
+    prefix: classpath:/templates/
+    suffix: .html
+    mode: HTML
+    encoding: UTF-8
+    cache: false
+  
+  # Shell配置（禁用，使用Web界面）
+  shell:
+    interactive:
+      enabled: false
+    noninteractive:
+      enabled: false
+
+# Ollama配置
+ollama:
+  # Ollama服务地址
+  url: http://localhost:11434
+  # 默认使用的模型
+  model: qwen2.5:7b
+
+# 日记数据配置
+diary:
+  # 数据存储目录
+  data:
+    directory: ./data
+
+# 日志配置
+logging:
+  level:
+    com.example.diary: INFO
+    org.springframework: WARN
+  pattern:
+    console: "%d{yyyy-MM-dd HH:mm:ss} - %msg%n"
